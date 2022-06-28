@@ -37,7 +37,7 @@
 
 //#define Port2Pin(port, bit) ((port-'A')*16+bit)
 
-#define CLOCK_SPEED_MHZ   96
+#define CLOCK_SPEED_MHZ   100
 
 
 #define BOARD_LED_PIN           PC13

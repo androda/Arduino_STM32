@@ -155,7 +155,15 @@ typedef struct {
 	int flash_ws;
 } clk_cfg_t;
 
-clk_cfg_t clock_config = { 336, 2, 7, 2, 5}; // set here your custom values
+clk_cfg_t clock_config = { 200, 2, 7, 2, 2 };
+
+/*
+
+f(VCO clock) = f(PLL clock input) × (PLLN / PLLM)
+f(PLL general clock output) = f(VCO clock) / PLLP
+f(USB OTG FS, SDIO) = f(VCO clock) / PLLQ
+
+*/
 
 #endif
 		

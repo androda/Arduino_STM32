@@ -126,8 +126,8 @@ blackpill_f411.upload.maximum_size=524288
 blackpill_f411.upload.maximum_data_size=131072
 
 blackpill_f411.build.core=maple
-blackpill_f411.build.f_cpu=96000000
-blackpill_f411.build.extra_flags=-DLED_BUILTIN=PC13 -DCRYSTAL_FREQ=25 -DNO_CCMRAM -DMCU_STM32F411CE
+blackpill_f411.build.f_cpu=100000000
+blackpill_f411.build.extra_flags=-DLED_BUILTIN=PC13 -DCRYSTAL_FREQ=25 -DNO_CCMRAM -DMCU_STM32F411CE  -DUSE_CUSTOM_RCC_CLK
 blackpill_f411.build.ldscript=ld/jtag.ld
 blackpill_f411.build.variant=blackpill_f411
 blackpill_f411.build.variant_system_lib=lib_f407.a

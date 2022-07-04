@@ -82,6 +82,22 @@
 #define BOARD_JTMS_SWDIO_PIN    PA13
 #define BOARD_JTCK_SWCLK_PIN    PA14
 
+// SDIO
+#define BOARD_SDIO_D0           PB7
+#define BOARD_SDIO_D1           PA8
+#define BOARD_SDIO_D2           PA9
+#define BOARD_SDIO_D3           PB5
+#define BOARD_SDIO_CLK          PB15
+#define BOARD_SDIO_CMD          PA6
+
+// SD card, SDIO mode
+#define SD_DAT0         BOARD_SDIO_D0	// PB7
+#define SD_DAT1         BOARD_SDIO_D1	// PA8
+#define SD_DAT2         BOARD_SDIO_D2	// PA9
+#define SD_DAT3         BOARD_SDIO_D3	// PB5
+#define SD_CLK          BOARD_SDIO_CK	// PB15
+#define SD_CMD          BOARD_SDIO_CMD	// PA6
+
 
 enum {
 PA0,PA1,PA2,PA3,PA4,PA5,PA6,PA7,PA8,PA9,PA10,PA11,PA12,PA13,PA14,PA15,

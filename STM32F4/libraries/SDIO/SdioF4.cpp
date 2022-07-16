@@ -117,10 +117,10 @@ static uint32_t t = 0;
 	Serial.print(", SDIO->STA: "); Serial.println(SDIO->STA, HEX); \
 	/*delay(1);*/ \
 }
-#define DBG_PIN PD0
+//#define DBG_PIN PD0
 
 static char dbg_str[1024];
-#define PRINTF(...) { sprintf(dbg_str, __VA_ARGS__); Serial.print(dbg_str); delay(1); }
+#define PRINTF(...)// { Serial.print(dbg_str); delay(1); }
 
 #else  // USE_DEBUG_MODE
 #define DBG_PRINT()
@@ -133,13 +133,13 @@ static void _panic(const char *message, uint32_t code)
 	Serial.print(message); Serial.println(code, HEX);
 	//Block the execution with blinky leds
 	pinMode(BOARD_LED_PIN, OUTPUT);
-	pinMode(BOARD_LED2_PIN, OUTPUT);
+	//pinMode(BOARD_LED2_PIN, OUTPUT);
 	while (1) {
 		digitalWrite(BOARD_LED_PIN, HIGH);
-		digitalWrite(BOARD_LED2_PIN, LOW);
+		//digitalWrite(BOARD_LED2_PIN, LOW);
 		delay(250);
 		digitalWrite(BOARD_LED_PIN, LOW);
-		digitalWrite(BOARD_LED2_PIN, HIGH);
+		//digitalWrite(BOARD_LED2_PIN, HIGH);
 		delay(250);
 	}
 }
@@ -419,8 +419,8 @@ bool SdioCard::begin(SdioConfig cfg)
   m_version2 = false;
 
 #if USE_DEBUG_MODE
-pinMode(DBG_PIN, OUTPUT);
-digitalWrite(DBG_PIN, HIGH);
+//pinMode(DBG_PIN, OUTPUT);
+//digitalWrite(DBG_PIN, HIGH);
 delay(100);
 #endif
   // initialize controller.

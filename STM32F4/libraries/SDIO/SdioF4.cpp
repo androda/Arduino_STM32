@@ -23,6 +23,7 @@
 #include <libmaple/dma.h>
 #include <boards.h>
 
+#define Serial Serial1
 #define USE_DEBUG_MODE 0 // set it 0 or 1
 #define USE_YIELD 0
 
@@ -475,6 +476,8 @@ delay(100);
   }
   sdio_set_dbus_width(SDIO_CLKCR_WIDBUS_4BIT);
 
+  uint32_t clockSpeed = 48000000;
+
   // Determine if High Speed mode is supported and set frequency.
   uint8_t status[64];
   // see "Physical Layer Simplified Specification Version 6.00", chapter 4.3.10, Table 4-13.
@@ -482,13 +485,18 @@ delay(100);
   // Function Selection of Function Group 1: bits 379:376, which is low nibble of byte [16]
   if (cardCMD6(0X00FFFFFF, status) && (2 & status[13]) &&
       cardCMD6(0X80FFFFF1, status) && (status[16] & 0XF) == 1) {
-	//Serial.println("\n*** 50MHz clock supported ***");
+#if USE_DEBUG_MODE
+	Serial.println("\n*** 50MHz clock supported ***");
+#endif
   } else {
-	_panic("*** Only 25MHz clock supported! ***", 0);
+	//_panic("*** Only 25MHz clock supported! ***", 0);
+    clockSpeed = 24000000;
   }
-
-  m_sdClkKhz = 24000;
-  sdio_set_clock(m_sdClkKhz*1000); // set clock to 24MHz
+#if USE_DEBUG_MODE
+	Serial.println("\n***Switching to 24MHz mode***");
+#endif
+  //m_sdClkKhz = 24000;
+  sdio_set_clock(clockSpeed);
 
   dma_init(DMA2);
   m_initDone = true;
@@ -556,14 +564,14 @@ bool SdioCard::readSector(uint32_t lba, uint8_t* buf)
 	}
 	if ( dmaTrxEnd(0)) {
 		if ( (uint32_t)buf & 3 ) {
-			//memcpy(buf, aligned, 512);
-			register uint8_t * dst = buf;
-			register uint8_t * src = (uint8_t *)aligned;
-			register uint16_t i = 64;
-			while ( i-- ) { // do 8 byte copies, is much faster than single byte copy
-				*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
-				*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
-			}
+			memcpy(buf, aligned, 512);
+			//register uint8_t * dst = buf;
+			//register uint8_t * src = (uint8_t *)aligned;
+			//register uint16_t i = 64;
+			//while ( i-- ) { // do 8 byte copies, is much faster than single byte copy
+			//	*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
+			//	*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
+			//}
 		}
 		return true;
 	}
@@ -705,15 +713,15 @@ bool SdioCard::writeSector(uint32_t lba, const uint8_t* buf)
 	{
 		PRINTF("_odd buf: %lX\n", (uint32_t)buf); // Serial.print((uint32_t)buf, HEX);
 
-		//memcpy(aligned, buf, 512);
-		register uint8_t * src = (uint8_t *)ptr;
-		ptr = (uint8_t *)aligned;
-		register uint8_t * dst = ptr;
-		register uint16_t i = 64;
-		while ( i-- ) { // do 8 byte copies, is much faster than single byte copy
-			*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
-			*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
-		}
+		memcpy(aligned, buf, 512);
+		//register uint8_t * src = (uint8_t *)ptr;
+		//ptr = (uint8_t *)aligned;
+		//register uint8_t * dst = ptr;
+		//register uint16_t i = 64;
+		//while ( i-- ) { // do 8 byte copies, is much faster than single byte copy
+		//	*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
+		//	*dst++ = *src++; *dst++ = *src++; *dst++ = *src++; *dst++ = *src++;
+		//}
 	}
 	if (yieldTimeout(isBusyCMD13)) { // wait for previous transmission end
 		return sdError(SD_CARD_ERROR_CMD13);

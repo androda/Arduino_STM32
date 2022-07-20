@@ -109,13 +109,19 @@ void sdio_peripheral_disable(spi_dev *dev) {
  */
 void sdio_set_clock(uint32_t clk)
 {
-	if (clk>24000000UL) clk = 24000000UL; // limit the SDIO master clock to 24MHz
+	//if (clk>24000000UL) clk = 24000000UL; // limit the SDIO master clock to 24MHz
 
 	if (clk<1000000) dly = DELAY_LONG;
 	else dly = DELAY_SHORT;
 
 	sdio_disable();
-	SDIO->CLKCR = (SDIO->CLKCR & (~(SDIO_CLKCR_CLKDIV|SDIO_CLKCR_BYPASS))) | SDIO_CLKCR_CLKEN | (((SDIOCLK/clk)-2)&SDIO_CLKCR_CLKDIV);
+    
+    uint32_t clkcfg = (SDIO->CLKCR & (~(SDIO_CLKCR_CLKDIV|SDIO_CLKCR_BYPASS))) | SDIO_CLKCR_CLKEN | (((SDIOCLK/clk)-2)&SDIO_CLKCR_CLKDIV);
+    if (clk > 24000000UL) {
+        clkcfg = clkcfg | SDIO_CLKCR_BYPASS;
+    }
+
+	SDIO->CLKCR = clkcfg;
 	delayMicroseconds(dly);
 }
 

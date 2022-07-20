@@ -147,7 +147,7 @@ void InitMCO1()
 }
 
 #ifdef USE_CUSTOM_RCC_CLK
-typedef struct {
+typedef struct {  // PLL_M is 25 for Blackpill F401 and F411 boards
 	int pll_n; // Internal system clock: PLL_N = (PLL_P * CLOCK_SPEED_MHZ), must be between 100..432
 	int pll_p; // PLL_P = [2, 4, 6]
 	int pll_q; // PLL_Q = (PLL_N / 48) - if USB wanted, then this must be an integer between 1..10
@@ -155,7 +155,7 @@ typedef struct {
 	int flash_ws;
 } clk_cfg_t;
 
-clk_cfg_t clock_config = { 200, 2, 7, 2, 2 };
+clk_cfg_t clock_config = { 200, 2, 4, 2, 2 };
 
 /*
 

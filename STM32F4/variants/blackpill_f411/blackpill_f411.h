@@ -37,7 +37,7 @@
 
 //#define Port2Pin(port, bit) ((port-'A')*16+bit)
 
-#define CLOCK_SPEED_MHZ   100
+#define CLOCK_SPEED_MHZ   96
 
 
 #define BOARD_LED_PIN           PC13
@@ -46,8 +46,8 @@
 #define BOARD_USB_DP_PIN		PA12
 
 #define BOARD_NR_USARTS         3
-#define BOARD_USART1_TX_PIN     PA9
-#define BOARD_USART1_RX_PIN     PA10
+#define BOARD_USART1_TX_PIN     PB6
+#define BOARD_USART1_RX_PIN     PB3
 #define BOARD_USART2_TX_PIN     PA2
 #define BOARD_USART2_RX_PIN     PA3
 //#define BOARD_USART6_TX_PIN     PA11 // USB_DM

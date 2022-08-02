@@ -49,7 +49,9 @@
 // currently officially supports).
 #ifndef BOARD_RCC_PLLMUL
   #if !USE_HSI_CLOCK
-	#if F_CPU==128000000
+	#if F_CPU==192000000
+		#define BOARD_RCC_PLLMUL RCC_PLLMUL_32
+	#elif F_CPU==128000000
 		#define BOARD_RCC_PLLMUL RCC_PLLMUL_16
 	#elif F_CPU==72000000
 		#define BOARD_RCC_PLLMUL RCC_PLLMUL_9

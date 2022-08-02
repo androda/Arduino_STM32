@@ -588,7 +588,8 @@ typedef enum rcc_pll_multiplier {
     RCC_PLLMUL_13 = (0xB << 18),
     RCC_PLLMUL_14 = (0xC << 18),
     RCC_PLLMUL_15 = (0xD << 18),
-    RCC_PLLMUL_16 = (0xE << 18),
+    RCC_PLLMUL_16 = ((0xE << 18) | (0x1 << 31)),
+    RCC_PLLMUL_32 = ((0xF << 18) | (0x5 << 29))
 } rcc_pll_multiplier;
 
 /* FIXME [0.0.13] Just have data point to an rcc_pll_multiplier! */

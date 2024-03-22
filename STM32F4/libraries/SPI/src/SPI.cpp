@@ -733,17 +733,17 @@ void SPIClass::dmaTransferRepeat()
 //  On exit TX buffer is not modified, and RX buffer contains the received data.
 //  Still in progress.
 //-----------------------------------------------------------------------------
-void SPIClass::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16 length, uint16 flags)
+uint8_t SPIClass::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16 length, uint16 flags)
 {
     if ( transmitBuf==NULL ) {
         if ( receiveBuf!=NULL ) {
             dmaTransfer(ff, receiveBuf, length, flags);
         }
-        return;
+        return 0;
     } else {
         if ( receiveBuf==NULL ) {
             dmaSend(transmitBuf, length, flags);
-            return;
+            return 0;
         }
         PRINTF("<dTb-");
         dmaWaitCompletion();
@@ -754,6 +754,7 @@ void SPIClass::dmaTransfer(const void *transmitBuf, void *receiveBuf, uint16 len
         dmaTransferRepeat();
         PRINTF("-dTb>\n");
     }
+    return 0;
 }
 //-----------------------------------------------------------------------------
 void SPIClass::dmaTransfer(const uint16_t tx_data, void *receiveBuf, uint16 length, uint16 flags)

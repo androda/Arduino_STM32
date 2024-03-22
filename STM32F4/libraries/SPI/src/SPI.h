@@ -304,7 +304,7 @@ private:
 public:
     void dmaTransferInit(const void * transmitBuf, void * receiveBuf, uint16 length, uint16 flags = 0);
     void dmaTransferInit(const uint16_t tx_data, void * receiveBuf, uint16 length, uint16 flags = 0);
-    void dmaTransfer(const void * transmitBuf, void * receiveBuf, uint16 length, uint16 flags = 0);
+    uint8_t dmaTransfer(const void * transmitBuf, void * receiveBuf, uint16 length, uint16 flags = 0);
     void dmaTransfer(const uint16_t tx_data, void * receiveBuf, uint16 length, uint16 flags = 0);
     void dmaTransfer(void) { dmaTransferRepeat(); }
     uint8_t dmaTransferReady() { return (_currentSetting->state == SPI_STATE_READY) ? 1 : 0; }

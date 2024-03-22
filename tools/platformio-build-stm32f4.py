@@ -109,7 +109,7 @@ def configure_error_led(board):
     env.Append(
         CPPDEFINES=[
             ("ERROR_LED_PIN", board_config.get(
-                "build.arduino.error_led_pin", "PD14"))
+                "build.arduino.error_led_pin", "PC13"))
         ]
     )
 

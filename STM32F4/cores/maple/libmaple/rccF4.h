@@ -621,6 +621,12 @@ void rcc_clk_disable(rcc_clk_id device);
 void rcc_clk_enable(rcc_clk_id device);
 void rcc_reset_dev(rcc_clk_id device);
 
+#ifdef RCCOVERRIDE
+
+uint32 get_flash_ws();
+void save_clock_table_values(uint32 apb2_clk);
+
+#endif
 
 typedef enum rcc_clk_domain {
     RCC_APB1,

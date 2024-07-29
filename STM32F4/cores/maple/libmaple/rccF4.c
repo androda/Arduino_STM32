@@ -171,6 +171,20 @@ const uint32_t SystemCoreClock = CLOCK_SPEED_HZ;
 uint32 PLL_M, PLL_N, PLL_P, PLL_Q;
 const uint32 multiples_of_48[] = {0,48,96,144,192,240,288,336,384,432};
 const uint32 flash_ws[] = {2,3,5};
+
+#ifdef RCCOVERRIDE
+
+uint32 get_flash_ws() {
+    return flash_ws[(CLOCK_SPEED_MHZ/80)];
+}
+
+void save_clock_table_values(uint32 apb2_clk) {
+    rcc_dev_clk_speed_table[RCC_AHB1] = CLOCK_SPEED_HZ;
+	rcc_dev_clk_speed_table[RCC_APB2] = apb2_clk;
+	rcc_dev_clk_speed_table[RCC_APB1] = apb2_clk/2;
+}
+
+#else
 //-----------------------------------------------------------------------------
 void rcc_clk_init(void)
 {
@@ -245,6 +259,7 @@ void rcc_clk_init(void)
 	/* Wait till the main PLL is used as system clock source */
 	while ((RCC->CFGR & RCC_CFGR_SWS_MASK ) != RCC_CFGR_SWS_PLL);
 }
+#endif
 	
 
 //-----------------------------------------------------------------------------
